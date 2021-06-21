@@ -10,7 +10,7 @@ Everyday, there is 5.6 billion google searches¹ made daily. This project will b
 
 ## Wireframe
 the window will contain a search bar and under it will be the data show
-![Image of Wireframe](https://plchldr.co/i/800x500)
+![Image of Wireframe](https://github.com/ROTBOW/js_proj/blob/main/assets/images/wireframe.png)
 
 
 ## Tech
