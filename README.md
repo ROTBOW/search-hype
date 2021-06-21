@@ -1,3 +1,15 @@
-# js_proj
+# js_proj (name pending)
 
-this is going to show many things, yes, many things
+## Backgrond
+---
+Everyday, there is 5.6 billion google searches[^1] made daily.
+
+
+
+
+
+
+
+
+
+[^1]: found though a google search 
