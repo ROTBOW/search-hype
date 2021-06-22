@@ -5,9 +5,17 @@ const d3 = require('d3');
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // let dataVis = document.getElementsByClassName('vis-div')[0];
+    let searchInput = document.getElementById('search-input');
+    let searchHeader = document.getElementById('search-title');
+
+    searchInput.addEventListener('change', e => {
+        let searchTerm = (e.target.value != '') ? e.target.value : 'beauty';
+        console.log(searchTerm);
+        searchHeader.innerHTML = `${searchTerm}`
+
+    
     let data = new Array();
-    axios.get(`/IOT/${'magic'}`)
+    axios.get(`/IOT/${searchTerm}`)
         .then (results => {
             for (let id in results.data.default.timelineData) {
                 dataClip = results.data.default.timelineData[id];
@@ -81,16 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch (err => {
             console.log('Fetch failed...');
         })
-
-    // data = [
-    //     {date: new Date('Jan 2004'), value: 67},
-    //     {date: new Date('Feb 2004'), value: 100},
-    //     {date: new Date('Mar 2004'), value: 65},
-    //     {date: new Date('Apr 2004'), value: 23},
-    //     {date: new Date('May 2004'), value: 43},
-    //     {date: new Date('Jun 2004'), value: 13}
-    // ]
-    // console.log(typeof data);
+    })
         
     
 
