@@ -7,11 +7,14 @@ const d3 = require('d3');
 document.addEventListener('DOMContentLoaded', () => {
     let searchInput = document.getElementById('search-input');
     let searchHeader = document.getElementById('search-title');
+    let visDiv = document.getElementsByClassName('vis-div')[0];
 
     searchInput.addEventListener('change', e => {
         let searchTerm = (e.target.value != '') ? e.target.value : 'beauty';
         console.log(searchTerm);
         searchHeader.innerHTML = `${searchTerm}`
+        visDiv.innerHTML = null;
+
 
     
     let data = new Array();
