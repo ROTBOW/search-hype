@@ -1,31 +1,82 @@
 const axios = require('axios');
 const d3 = require('d3');
+const randomWords = [
+    'love',
+    'beauty',
+    'music',
+    'progamming',
+    'exodia the forbidden one',
+    'javascript',
+    'search term',
+    'hype'
+]
+randWord = randomWords[Math.random() % randomWords.length]
 
 
+const trialEvent = searchInput => {
+    return new CustomEvent('change', {detail: { value: `${searchInput}` } })
+}
 
+
+const formatDate = date => {
+
+    return `${[
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sept',
+        'Oct',
+        'Nov',
+        'Dec'
+    ][date.getMonth()]} ${date.getFullYear()}`
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     let searchInput = document.getElementById('search-input');
-    let searchHeader = document.getElementById('search-title');
+    let searchHeaders = document.getElementsByClassName('search-title');
     let visDiv = document.getElementsByClassName('vis-div')[0];
 
+    
+
     searchInput.addEventListener('change', e => {
-        let searchTerm = (e.target.value != '') ? e.target.value : 'beauty';
-        console.log(searchTerm);
-        searchHeader.innerHTML = `${searchTerm}`
+        let searchTerm;
+
+        if (typeof e.detail != 'undefined') {
+            searchTerm = e.detail.value;
+        } else if (e.target.value === '') {
+            searchInput.dispatchEvent(trialEvent(randomWords[Math.floor(Math.random()*randomWords.length)]));
+            return
+        } else {
+            searchTerm = e.target.value;
+        }
+
+        searchHeaders[0].innerHTML = `${searchTerm}`
+        searchHeaders[1].innerHTML = `${searchTerm}`
         visDiv.innerHTML = null;
 
 
     
     let data = new Array();
+    let bestTime = {date: null, value: 0};
+    let worstTime = {date: null, value: 100};
     axios.get(`/IOT/${searchTerm}`)
         .then (results => {
             for (let id in results.data.default.timelineData) {
                 dataClip = results.data.default.timelineData[id];
-                data.push({
+                let tempData = {
                     date: new Date(dataClip.formattedTime),
                     value: Number(dataClip.value)
-                })
+                }
+
+                if (tempData.value >= bestTime.value) bestTime = tempData;
+                if (tempData.value <= worstTime.value) worstTime = tempData;
+
+                data.push(tempData)
             }
             window.data = data;
             
@@ -87,13 +138,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             chart()
 
+            
+            // let infoDiv = document.getElementsByClassName("info-div")[0];
+            document.getElementById('p-date').innerHTML = `${formatDate(bestTime.date)}`
+            document.getElementById('p-val').innerHTML = `${bestTime.value}`
+
+
+            document.getElementById('w-date').innerHTML = `${formatDate(worstTime.date)}`
+            document.getElementById('w-val').innerHTML = `${worstTime.value}`
+
 
         })
         .catch (err => {
-            console.log('Fetch failed...');
+            console.log('Fetch failed...', err);
         })
     })
-        
+       
+    searchInput.dispatchEvent(trialEvent(randomWords[Math.floor(Math.random()*randomWords.length)]));
     
 
     // let term = 'magic'

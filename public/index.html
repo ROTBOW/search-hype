@@ -4,21 +4,46 @@
     <meta charset="utf-8">
     <title></title>
     <script type="text/javascript" src="./bundle.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/style.css">
   </head>
   <body>
     <main id='main'>
-      <h1>Do you even search bro?</h1>
+      <div class='shape'></div>
+      <h1>Search Hype</h1>
 
-      <input type="text" placeholder="Search bro?" id="search-input"/>
-      <h2>Search Term: <i id='search-title'></i></h2>
+      <div id="search-items">
+        <h2>Search Term: <i class='search-title'></i></h2>
+        <input type="text" placeholder="Search Anything" id="search-input"/>
+      </div>
+
       <div class="vis-div"></div>
+      <div class="info-div">
+        <p>Search Term: <i class='search-title'></i></p>
+
+        <p>
+          It searched the most during <i id="p-date">Jan 2007</i>&nbsp with a popularity of <i id="p-val">67</i>/100
+        </p>
+
+        <p>
+          It searched the least during <i id="w-date">Mar 2015</i>&nbsp with a popularity of <i id="w-val">7</i>/100
+        </p>
+
+      </div>
 
 
 
-      <footer>
-        Created by Josiah Leon
-      </footer>
-
+      
     </main>
+
+    <footer>
+      <a href="https://github.com/ROTBOW">Josiah Leon</a>
+      <a href="https://github.com/ROTBOW/js_proj">Github</a>
+    </footer>
+
   </body>
 </html>
