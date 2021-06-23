@@ -1,4 +1,4 @@
-# js_proj (name pending)
+# Search Hype
 
 ## Background
 Everyday, there is 5.6 billion google searches¹ made daily. This project will be a visual representation of a search term's popularity.

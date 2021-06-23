@@ -139,10 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
             chart()
 
             
-            // let infoDiv = document.getElementsByClassName("info-div")[0];
             document.getElementById('p-date').innerHTML = `${formatDate(bestTime.date)}`
             document.getElementById('p-val').innerHTML = `${bestTime.value}`
-
 
             document.getElementById('w-date').innerHTML = `${formatDate(worstTime.date)}`
             document.getElementById('w-val').innerHTML = `${worstTime.value}`
