@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .datum(data)
                     .attr("fill", "none")
                     .attr("stroke", "steelblue")
-                    .attr("stroke-width", 1.5)
+                    .attr("stroke-width", 1.2)
                     .attr("stroke-linejoin", "round")
                     .attr("stroke-linecap", "round")
                     .attr("d", line);
