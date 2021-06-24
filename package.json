@@ -13,8 +13,9 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "build": "webpack --watch",
     "start": "node app.js",
+    "build": "webpack",
+    "build:watch": "webpack --watch",
     "start:debug": "DEBUG=* node app.js"
   },
   "dependencies": {
