@@ -40,6 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let searchInput = document.getElementById('search-input');
     let searchHeaders = document.getElementsByClassName('search-title');
     let visDiv = document.getElementsByClassName('vis-div')[0];
+    let hoverArrow = document.getElementsByClassName('hover-arrow')[0];
+
+    setTimeout(() => {
+        hoverArrow.classList.add('hide-me')
+    }, 1000);
 
     
 
