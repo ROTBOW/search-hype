@@ -34,6 +34,65 @@ app.get('/IOT/:term', (req, res) => {
     })
 })
 
+app.get('/IOTC/:term1/:term2', (req, res) => {
+  let dataset1;
+  let dataset2;
+  let bestTime = {date: null, value: 0};
+  let worstTime = {date: null, value: 100};
+  let dataToSendBack = {data: []};
+
+  gAPI.interestOverTime({keyword: `${req.params.term1}`})
+    .then(result =>{
+      dataset1 = JSON.parse(result);
+    })
+    .then(() => {
+    gAPI.interestOverTime({keyword: `${req.params.term2}`})
+      .then(result =>{
+        dataset2 = JSON.parse(result);
+      })
+      .then(() => {
+
+        let tempArr = []
+        for (let id in dataset1.default.timelineData) {
+          dataClip = dataset1.default.timelineData[id];
+          console.log(dataClip);
+          tempData = {
+            date: new Date(dataClip.formattedTime),
+            value: Number(dataClip.value)
+          }
+          
+          if (tempData.value >= bestTime.value) bestTime = tempData;
+          if (tempData.value <= worstTime.value) worstTime = tempData;
+          
+          tempArr.push(tempData)
+        }
+        dataToSendBack.data.push(tempArr);
+
+        tempArr = []
+        for (let id in dataset2.default.timelineData) {
+          dataClip = dataset2.default.timelineData[id];
+          tempData = {
+            date: new Date(dataClip.formattedTime),
+            value: Number(dataClip.value)
+          } 
+          tempArr.push(tempData)
+        }
+        dataToSendBack.data.push(tempArr);
+
+        
+
+        
+
+
+        dataToSendBack['bestTime'] = bestTime;
+        dataToSendBack['worstTime'] = worstTime;
+        res.send(dataToSendBack);
+      })
+  })
+
+    
+})
+
 
 app.listen(PORT, () => {
   console.log(__dirname);
