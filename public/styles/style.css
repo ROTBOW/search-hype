@@ -76,6 +76,7 @@
 #main #more-info {
     position: absolute;
     top: 90px;
+    z-index: 1;
 
     font-family: 'Raleway', sans-serif;
     font-size: large;
@@ -128,6 +129,7 @@ input {
     border-radius: 0px 20px 20px 0px;
     border: 1px solid rgba(0, 0, 0, 0.3);
     padding: 4px;
+    text-align: center;
     
     transition: border 1s;
 }
@@ -139,9 +141,23 @@ input:focus-visible {
 
 }
 
-/* input:hover {
-    border: solid 1px rgba(0, 0, 0, 1);
-} */
+form input#second-input {
+    position: relative;
+    border-radius: 20px 0px 0px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 0;
+
+    left: 5px;
+    transition: border 1s, width 1s;
+}
+
+form input#second-input.show-search{
+    width: 180px;
+    border-left: none;
+    border-right: solid 1px rgba(0, 0, 0, 1);
+    padding-left: 15px;
+}
+
 
 
 #main .vis-div {

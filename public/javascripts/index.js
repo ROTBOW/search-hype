@@ -50,38 +50,43 @@ document.addEventListener('DOMContentLoaded', () => {
     let searchInput = document.getElementById('search-input');
     let searchHeaders = document.getElementsByClassName('search-title');
     let visDiv = document.getElementsByClassName('vis-div')[0];
-
-    // setTimeout(() => {
-    //     hoverArrow.classList.add('hide-me')
-    // }, 2000);
+    let secondInput = document.getElementById('second-input');
+    let searchForm = document.getElementById('search-form');
 
     arrowTimeout()
         .then( div => {
             setTimeout(() => {
-                console.log('I fired');
                 div.classList.add('remove-me');
             }, 5000)
         })
 
+    searchForm.addEventListener('submit', e => {
+        console.log('this is from form log: ', e);
+    })
+
     
 
-    searchInput.addEventListener('change', e => {
-        let searchTerm;
+    document.addEventListener('change', e => {
+        let searchTerm = searchInput.value;
+        let compareTerm = secondInput.value;
 
         if (typeof e.detail != 'undefined') {
             searchTerm = e.detail.value;
         } else if (e.target.value === '') {
-            searchInput.dispatchEvent(trialEvent(randomWords[Math.floor(Math.random()*randomWords.length)]));
+            secondInput.classList.remove('show-search')
+            secondInput.value = '';
+            document.dispatchEvent(trialEvent(randomWords[Math.floor(Math.random()*randomWords.length)]));
             return
         } else {
-            searchTerm = e.target.value;
+            secondInput.classList.add('show-search')
         }
 
         searchHeaders[0].innerHTML = `${searchTerm}`
         searchHeaders[1].innerHTML = `${searchTerm}`
         visDiv.innerHTML = null;
 
-
+        // console.log('first term: ', searchTerm);
+        // console.log('second term: ', compareTerm);
     
     let data = new Array();
     let bestTime = {date: null, value: 0};
@@ -147,14 +152,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 svg.append("g")
                     .call(yAxis);
 
-                svg.append("path")
-                    .datum(data)
-                    .attr("fill", "none")
-                    .attr("stroke", "steelblue")
-                    .attr("stroke-width", 1.2)
-                    .attr("stroke-linejoin", "round")
-                    .attr("stroke-linecap", "round")
-                    .attr("d", line);
+                svg.selectAll('.line')
+                    .data(sumstat)
+                    .enter()
+                        svg.append("path")
+                            // .datum(data)
+                            .attr("fill", "none")
+                            .attr("stroke", "steelblue")
+                            .attr("stroke-width", 1.2)
+                            .attr("stroke-linejoin", "round")
+                            .attr("stroke-linecap", "round")
+                            .attr("d", line);
 
                 return svg.node()
             }
@@ -174,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
        
-    searchInput.dispatchEvent(trialEvent(randomWords[Math.floor(Math.random()*randomWords.length)]));
+    document.dispatchEvent(trialEvent(randomWords[Math.floor(Math.random()*randomWords.length)]));
     
 
     // let term = 'magic'
