@@ -50,10 +50,9 @@ const arrowTimeout = function () {
 
 document.addEventListener('DOMContentLoaded', () => {
     let searchInput = document.getElementById('search-input');
+    let secondInput = document.getElementById('second-input');
     let searchHeaders = document.getElementsByClassName('search-title');
     let visDiv = document.getElementsByClassName('vis-div')[0];
-    let secondInput = document.getElementById('second-input');
-    let searchForm = document.getElementById('search-form');
 
     arrowTimeout()
         .then( div => {
@@ -61,10 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 div.classList.add('remove-me');
             }, 5000)
         })
-
-    searchForm.addEventListener('submit', e => {
-        console.log('this is from form log: ', e);
-    })
 
     
 
@@ -74,8 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (typeof e.detail != 'undefined') {
             searchTerm = e.detail.value;
-        } else if (e.target.value === '') {
+        } else if (searchTerm === '') {
             secondInput.classList.remove('show-search')
+            searchInput.classList.remove('color-me-blue')
+            secondInput.classList.remove('color-me-red')
             secondInput.value = '';
             document.dispatchEvent(trialEvent(randomWords[Math.floor(Math.random()*randomWords.length)]));
             return
@@ -83,7 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
             secondInput.classList.add('show-search')
         }
 
-        searchHeaders[0].innerHTML = `${searchTerm}`
+        const twoSearchsCheck = () => {
+            if (compareTerm === '') return '';
+            return ` & ${compareTerm}`
+        }
+
+        searchHeaders[0].innerHTML = `${searchTerm}${twoSearchsCheck()}`
         searchHeaders[1].innerHTML = `${searchTerm}`
         visDiv.innerHTML = null;
 
@@ -158,19 +160,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         .attr("stroke-linecap", "round")
                         .attr("d", line);
 
-                    svg.append("path")
-                        .datum(data.data[1])
-                        .attr("fill", "none")
-                        .attr("stroke", "red")
-                        .attr("stroke-width", 1.2)
-                        .attr("stroke-linejoin", "round")
-                        .attr("stroke-linecap", "round")
-                        .attr("d", line);
+                    if (typeof data.data[1] != 'undefined') {
+                        svg.append("path")
+                            .datum(data.data[1])
+                            .attr("fill", "none")
+                            .attr("stroke", "red")
+                            .attr("stroke-width", 1.2)
+                            .attr("stroke-linejoin", "round")
+                            .attr("stroke-linecap", "round")
+                            .attr("d", line);
+                    }
 
                 return svg.node()
             }
             chart()
 
+            if (compareTerm != '<INVALID-SEARCH>') {
+                searchInput.classList.add('color-me-blue')
+                secondInput.classList.add('color-me-red')
+            }
             
             document.getElementById('p-date').innerHTML = `${formatDate(new Date(data.bestTime.date))}`
             document.getElementById('p-val').innerHTML = `${data.bestTime.value}`

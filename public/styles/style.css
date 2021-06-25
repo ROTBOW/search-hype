@@ -124,6 +124,14 @@ i {
     margin-left: 0.5rem;
 }
 
+.color-me-blue {
+    color: steelblue;
+}
+
+.color-me-red {
+    color: red;
+}
+
 input {
     border: none;
     border-radius: 0px 20px 20px 0px;
@@ -131,7 +139,7 @@ input {
     padding: 4px;
     text-align: center;
     
-    transition: border 1s;
+    transition: border 1s, color 3s;
 }
 
 input:focus-visible {
