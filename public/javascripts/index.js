@@ -10,7 +10,6 @@ const randomWords = [
     'search term',
     'hype'
 ]
-randWord = randomWords[Math.random() % randomWords.length]
 
 
 const trialEvent = searchInput => {
@@ -36,15 +35,33 @@ const formatDate = date => {
     ][date.getMonth()]} ${date.getFullYear()}`
 }
 
+
+const arrowTimeout = function () {
+    let hoverArrow = document.getElementsByClassName('hover-arrow')[0];
+    return new Promise((res, rej) => {
+        setTimeout(() => {
+            hoverArrow.classList.add('hide-me');
+            res(hoverArrow);
+        }, 2000);
+    })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     let searchInput = document.getElementById('search-input');
     let searchHeaders = document.getElementsByClassName('search-title');
     let visDiv = document.getElementsByClassName('vis-div')[0];
-    let hoverArrow = document.getElementsByClassName('hover-arrow')[0];
 
-    setTimeout(() => {
-        hoverArrow.classList.add('hide-me')
-    }, 1000);
+    // setTimeout(() => {
+    //     hoverArrow.classList.add('hide-me')
+    // }, 2000);
+
+    arrowTimeout()
+        .then( div => {
+            setTimeout(() => {
+                console.log('I fired');
+                div.classList.add('remove-me');
+            }, 5000)
+        })
 
     
 

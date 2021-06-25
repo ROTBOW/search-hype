@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-#main .hover-arrow {
+.hover-arrow {
     position: absolute;
     display: flex;
     align-items: center;
@@ -39,6 +39,10 @@
 
 .hide-me {
     opacity: 0;
+}
+
+.remove-me {
+    display: none;
 }
 
 
