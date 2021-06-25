@@ -1,5 +1,7 @@
 const axios = require('axios');
 const d3 = require('d3');
+const d3Collection = require('d3-collection');
+
 const randomWords = [
     'love',
     'beauty',
@@ -85,32 +87,26 @@ document.addEventListener('DOMContentLoaded', () => {
         searchHeaders[1].innerHTML = `${searchTerm}`
         visDiv.innerHTML = null;
 
-        // console.log('first term: ', searchTerm);
-        // console.log('second term: ', compareTerm);
     
     let data = new Array();
-    let bestTime = {date: null, value: 0};
-    let worstTime = {date: null, value: 100};
-    axios.get(`/IOT/${searchTerm}`)
+    if (compareTerm === '') compareTerm = '<INVALID-SEARCH>'
+    axios.get(`/IOTC/${searchTerm}/${compareTerm}`)
         .then (results => {
-            for (let id in results.data.default.timelineData) {
-                dataClip = results.data.default.timelineData[id];
-                let tempData = {
-                    date: new Date(dataClip.formattedTime),
-                    value: Number(dataClip.value)
-                }
-
-                if (tempData.value >= bestTime.value) bestTime = tempData;
-                if (tempData.value <= worstTime.value) worstTime = tempData;
-
-                data.push(tempData)
-            }
-            window.data = data;
+            data = results.data;
             
-
+            data.data[0].forEach(item => {
+                item.date = new Date(item.date);
+            })
+            data.data[1].forEach(item => {
+                item.date = new Date(item.date);
+            })
+            
+            
+            window.data = data;
             const margin = ({top: 20, right: 30, bottom: 30, left: 40});
             const height = 500;
             const width = 500;
+         
 
             let xAxis = g => g
                 .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -124,14 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     .attr("x", 3)
                     .attr("text-anchor", "start")
                     .attr("font-weight", "bold")
-                    .text(data.y))
+                    .text(data.data[0].y))
 
             const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.value)]).nice()
+                .domain([0, d3.max(data.data[0], d => d.value)]).nice()
                 .range([height - margin.bottom, margin.top])
 
             const x = d3.scaleUtc()
-                .domain(d3.extent(data, d => d.date))
+                .domain(d3.extent(data.data[0], d => d.date))
                 .range([margin.left, width - margin.right])
 
             const line = d3.line()
@@ -152,28 +148,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 svg.append("g")
                     .call(yAxis);
 
-                svg.selectAll('.line')
-                    .data(sumstat)
-                    .enter()
-                        svg.append("path")
-                            // .datum(data)
-                            .attr("fill", "none")
-                            .attr("stroke", "steelblue")
-                            .attr("stroke-width", 1.2)
-                            .attr("stroke-linejoin", "round")
-                            .attr("stroke-linecap", "round")
-                            .attr("d", line);
+
+                    svg.append("path")
+                        .datum(data.data[0])
+                        .attr("fill", "none")
+                        .attr("stroke", "steelblue")
+                        .attr("stroke-width", 1.2)
+                        .attr("stroke-linejoin", "round")
+                        .attr("stroke-linecap", "round")
+                        .attr("d", line);
+
+                    svg.append("path")
+                        .datum(data.data[1])
+                        .attr("fill", "none")
+                        .attr("stroke", "red")
+                        .attr("stroke-width", 1.2)
+                        .attr("stroke-linejoin", "round")
+                        .attr("stroke-linecap", "round")
+                        .attr("d", line);
 
                 return svg.node()
             }
             chart()
 
             
-            document.getElementById('p-date').innerHTML = `${formatDate(bestTime.date)}`
-            document.getElementById('p-val').innerHTML = `${bestTime.value}`
+            document.getElementById('p-date').innerHTML = `${formatDate(new Date(data.bestTime.date))}`
+            document.getElementById('p-val').innerHTML = `${data.bestTime.value}`
 
-            document.getElementById('w-date').innerHTML = `${formatDate(worstTime.date)}`
-            document.getElementById('w-val').innerHTML = `${worstTime.value}`
+            document.getElementById('w-date').innerHTML = `${formatDate(new Date(data.worstTime.date))}`
+            document.getElementById('w-val').innerHTML = `${data.worstTime.value}`
 
 
         })

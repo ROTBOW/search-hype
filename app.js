@@ -41,6 +41,8 @@ app.get('/IOTC/:term1/:term2', (req, res) => {
   let worstTime = {date: null, value: 100};
   let dataToSendBack = {data: []};
 
+  let secondTerm = (req.params.term2 === "<INVALID-SEARCH>") ? '' : req.params.term2;
+
   gAPI.interestOverTime({keyword: `${req.params.term1}`})
     .then(result =>{
       dataset1 = JSON.parse(result);
@@ -55,7 +57,6 @@ app.get('/IOTC/:term1/:term2', (req, res) => {
         let tempArr = []
         for (let id in dataset1.default.timelineData) {
           dataClip = dataset1.default.timelineData[id];
-          console.log(dataClip);
           tempData = {
             date: new Date(dataClip.formattedTime),
             value: Number(dataClip.value)
