@@ -4,9 +4,9 @@
 Everyday, there is 5.6 billion google searches¹ made daily. This project will be a visual representation of a search term's popularity.
 
 ## MVPs
-- [ ] Find any search term to see its data (a search bar)
-- [ ] Data visualization of a search term's popularity
-- [ ] Comparison of two diffrent search terms
+- [X] Find any search term to see its data (a search bar)
+- [X] Data visualization of a search term's popularity
+- [X] Comparison of two diffrent search terms
 
 ## Wireframe
 the window will contain a search bar and under it will be the data show
