@@ -1,6 +1,5 @@
 const axios = require('axios');
 const d3 = require('d3');
-const d3Collection = require('d3-collection');
 
 const randomWords = [
     'love',
@@ -10,7 +9,8 @@ const randomWords = [
     'exodia the forbidden one',
     'javascript',
     'search term',
-    'hype'
+    'hype',
+    'software'
 ]
 
 

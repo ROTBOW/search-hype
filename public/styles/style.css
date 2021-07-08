@@ -119,6 +119,7 @@ i {
     font-weight: bold;
     font-style: italic;
     text-transform: capitalize;
+    white-space: nowrap;
 }
 
 .search-title i {
@@ -131,6 +132,10 @@ i {
 
 .color-me-red {
     color: red;
+}
+
+#search-form {
+    white-space: nowrap;
 }
 
 input {
