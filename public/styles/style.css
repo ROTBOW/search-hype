@@ -62,7 +62,7 @@
     font-family: 'Raleway', sans-serif;
     font-weight: bold;
     font-size: 34px;
-    z-index: 1;
+    z-index: 2;
 
     padding: 1rem;
     background-color: rgb(155, 155, 155);
@@ -80,6 +80,7 @@
 
     font-family: 'Raleway', sans-serif;
     font-size: large;
+    line-height: 1.6rem;
     color: black;
     overflow: hidden;
 
@@ -97,9 +98,9 @@
 
 #main h1:hover + #more-info {
     top: 120px;
-    width: 25rem;
-    height: 8rem;
-    padding: 8px;
+    width: 30rem;
+    height: 9.4rem;
+    padding: 10px;
 }
 
 
@@ -139,7 +140,7 @@ input {
     padding: 4px;
     text-align: center;
     
-    transition: border 1s, color 3s;
+    transition: border 1s;
 }
 
 input:focus-visible {
@@ -199,12 +200,13 @@ footer a {
     text-decoration: none;
     border-radius: 2px;
     color: white;
+    font-family: 'Open Sans', sans-serif;
 
     transition: border-radius 0.5s, background-color 0.5s;
 }
 
 footer a:hover {
     border-radius: 10px;
-    background-color: rgb(104, 44, 44);
+    background-color: rgb(70, 70, 70);
 
 }
